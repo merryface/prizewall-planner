@@ -2,6 +2,8 @@
 let baseStartingPoints = 3200; // Default to Deluxe
 let cart = [];
 let eventTickets = 0;
+let prizesData = []; // Store loaded prizes
+let eventsData = { scheduled: [], ondemand: [] }; // Store loaded events
 
 // Configuration
 const CONFIG = {
@@ -12,22 +14,14 @@ const CONFIG = {
     },
     WARNING_THRESHOLD: 500,
     STORAGE_KEY: 'prizewallCart',
-    STATE_KEY: 'prizewallState'
+    STATE_KEY: 'prizewallState',
+    PRIZES_KEY: 'prizewallCustomPrizes',
+    EVENTS_KEY: 'prizewallCustomEvents',
+    DEFAULT_PRIZES_PATH: 'prizes.json',
+    DEFAULT_EVENTS_PATH: 'events.json'
 };
 
-const eventBaseRewards = {
-    deluxe: 2000,
-    standard: 1000,
-    eternal: 1000,
-    draft: 800,
-    chaosdraft: 800,
-    standardod: 400,
-    draftod: 400,
-    sealedod: 300,
-    commanderod: 300,
-    chaosod: 300,
-    bonus: 200
-};
+const eventBaseRewards = {}; // Will be populated from events data
 
 // DOM Cache for performance
 const DOM = {
@@ -38,7 +32,9 @@ const DOM = {
     eventTickets: document.getElementById('eventTickets'),
     startingPoints: document.getElementById('startingPoints'),
     spentPoints: document.getElementById('spentPoints'),
-    remainingPoints: document.getElementById('remainingPoints')
+    remainingPoints: document.getElementById('remainingPoints'),
+    prizesContainer: document.getElementById('prizesContainer'),
+    eventsContainer: document.getElementById('eventsContainer')
 };
 
 // Initialize
@@ -50,8 +46,13 @@ function init() {
     
     loadState();
     loadCart();
-    updateDisplay();
-    attachEventListeners();
+    Promise.all([loadPrizes(), loadEvents()]).then(() => {
+        updateDisplay();
+        attachEventListeners();
+    }).catch(err => {
+        console.error('Initialization error:', err);
+        attachEventListeners();
+    });
 }
 
 // Validate DOM elements exist
@@ -406,6 +407,201 @@ function loadState() {
             console.error('Failed to load state:', e);
         }
     }
+}
+
+// ===== JSON Prize Management =====
+
+// Load prizes from JSON (custom or default)
+async function loadPrizes() {
+    try {
+        // Check if there's custom prizes in localStorage
+        const customPrizes = localStorage.getItem(CONFIG.PRIZES_KEY);
+        
+        if (customPrizes) {
+            const data = JSON.parse(customPrizes);
+            prizesData = convertPrizesDataToArray(data);
+        } else {
+            // Load default JSON file
+            const response = await fetch(CONFIG.DEFAULT_PRIZES_PATH);
+            if (!response.ok) throw new Error('Failed to load default prizes');
+            const data = await response.json();
+            prizesData = convertPrizesDataToArray(data);
+        }
+        
+        renderPrizes();
+    } catch (e) {
+        console.error('Failed to load prizes:', e);
+        showAlert('Failed to load prizes', 'danger');
+    }
+}
+
+// Convert JSON prizes data structure to array format
+function convertPrizesDataToArray(data) {
+    const prizes = [];
+    
+    // Add boosters
+    if (data.boosters) {
+        data.boosters.forEach(booster => {
+            prizes.push({
+                category: 'Booster Pack',
+                name: booster.name,
+                points: booster.points
+            });
+        });
+    }
+    
+    // Add cards
+    if (data.cards) {
+        data.cards.forEach(card => {
+            prizes.push({
+                category: 'Cards',
+                name: card.name,
+                points: card.points
+            });
+        });
+    }
+    
+    // Add mats
+    if (data.mats) {
+        data.mats.forEach(mat => {
+            prizes.push({
+                category: 'Game Mats',
+                name: mat.name,
+                points: mat.points
+            });
+        });
+    }
+    
+    return prizes;
+}
+
+// Render prizes grouped by category
+function renderPrizes() {
+    if (prizesData.length === 0) {
+        DOM.prizesContainer.innerHTML = '<p class="empty-state">No prizes loaded</p>';
+        return;
+    }
+    
+    // Group prizes by category
+    const grouped = {};
+    prizesData.forEach(prize => {
+        if (!grouped[prize.category]) {
+            grouped[prize.category] = [];
+        }
+        grouped[prize.category].push(prize);
+    });
+    
+    // Render each category
+    let html = '';
+    for (const [category, items] of Object.entries(grouped)) {
+        html += `
+            <div class="prize-category">
+                <h3>${escapeHtml(category)}</h3>
+                <div class="prize-grid">
+        `;
+        
+        items.forEach(prize => {
+            html += `
+                <div class="prize-item">
+                    <span class="prize-name">${escapeHtml(prize.name)}</span>
+                    <button class="prize-btn prize-btn-minus" data-name="${escapeHtml(prize.name)}" data-points="${prize.points}">−</button>
+                    <button class="prize-btn prize-btn-plus" data-name="${escapeHtml(prize.name)}" data-points="${prize.points}">+</button>
+                </div>
+            `;
+        });
+        
+        html += `
+                </div>
+            </div>
+        `;
+    }
+    
+    DOM.prizesContainer.innerHTML = html;
+}
+
+// ===== Events Management =====
+
+// Load events from JSON (custom or default)
+async function loadEvents() {
+    try {
+        // Check if there's custom events in localStorage
+        const customEvents = localStorage.getItem(CONFIG.EVENTS_KEY);
+        
+        if (customEvents) {
+            eventsData = JSON.parse(customEvents);
+        } else {
+            // Load default JSON file
+            const response = await fetch(CONFIG.DEFAULT_EVENTS_PATH);
+            if (!response.ok) throw new Error('Failed to load default events');
+            eventsData = await response.json();
+        }
+        
+        // Build eventBaseRewards object from loaded data
+        eventBaseRewards.clear?.(); // Clear if exists
+        [...eventsData.scheduled, ...eventsData.ondemand].forEach(event => {
+            eventBaseRewards[event.id] = event.baseReward;
+        });
+        
+        renderEvents();
+    } catch (e) {
+        console.error('Failed to load events:', e);
+        showAlert('Failed to load events', 'danger');
+    }
+}
+
+// Render events dynamically
+function renderEvents() {
+    if (!eventsData.scheduled && !eventsData.ondemand) {
+        DOM.eventsContainer.innerHTML = '<p class="empty-state">No events loaded</p>';
+        return;
+    }
+    
+    let html = '';
+    
+    // Render Scheduled Events
+    if (eventsData.scheduled && eventsData.scheduled.length > 0) {
+        html += `
+            <div class="event-category">
+                <h3>Scheduled Side Events</h3>
+                ${eventsData.scheduled.map(event => renderEventHTML(event)).join('')}
+            </div>
+        `;
+    }
+    
+    // Render On-Demand Events
+    if (eventsData.ondemand && eventsData.ondemand.length > 0) {
+        html += `
+            <div class="event-category">
+                <h3>On-Demand Side Events</h3>
+                ${eventsData.ondemand.map(event => renderEventHTML(event)).join('')}
+            </div>
+        `;
+    }
+    
+    DOM.eventsContainer.innerHTML = html;
+}
+
+// Render a single event HTML
+function renderEventHTML(event) {
+    const baseText = event.baseReward > 0 ? `Base: ${event.baseReward} tickets` : 'No base reward';
+    
+    return `
+        <div class="event-item">
+            <div class="event-header">
+                <input type="checkbox" id="evt-${event.id}" class="event-checkbox">
+                <label for="evt-${event.id}">${escapeHtml(event.name)}</label>
+                <span class="base-tickets">${baseText}</span>
+            </div>
+            <div class="event-placement" id="evt-${event.id}-placement" style="display: none;">
+                <label>Wins:</label>
+                <select class="wins-select" data-event="${event.id}">
+                    ${event.winOptions.map(opt => `
+                        <option value="${opt.value}">${escapeHtml(opt.label)}${opt.value > 0 ? ` (+${opt.value})` : ''}</option>
+                    `).join('')}
+                </select>
+            </div>
+        </div>
+    `;
 }
 
 // Initialize app

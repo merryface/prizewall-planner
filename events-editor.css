@@ -1,0 +1,177 @@
+/* Events Editor Styles */
+
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.event-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.event-card:hover {
+    border-color: #667eea;
+}
+
+.event-card-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 15px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.event-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.event-input-group label {
+    font-size: 0.85em;
+    color: #666;
+    font-weight: 500;
+}
+
+.event-input-group input {
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95em;
+    transition: border-color 0.3s ease;
+}
+
+.event-input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.event-card-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.win-options-section {
+    border-top: 2px solid #f0f0f0;
+    padding-top: 15px;
+}
+
+.win-options-section h4 {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.win-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.win-option-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 8px;
+    background: #f8f9ff;
+    border-radius: 6px;
+}
+
+.win-option-item input {
+    padding: 8px 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.9em;
+}
+
+.win-option-item input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.win-options-controls {
+    margin-top: 10px;
+}
+
+.btn-small {
+    padding: 8px 16px;
+    font-size: 0.9em;
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1em;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-delete {
+    background: #fee;
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.btn-delete:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Success message */
+.save-success {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #27ae60;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease;
+    z-index: 1000;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .event-card-header {
+        grid-template-columns: 1fr;
+    }
+    
+    .event-card-actions {
+        justify-content: flex-end;
+    }
+    
+    .win-option-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}

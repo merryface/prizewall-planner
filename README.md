@@ -9,15 +9,15 @@ A mobile-friendly web-based planner to help you manage your prize wall purchases
   - **Scheduled Side Events**: Deluxe Sector Cup, Standard Sector Cup, Eternal Sector Cup, Draft Challenge, Chaos Draft
   - **On-Demand Events**: Standard On-Demand, Draft On-Demand, Sealed On-Demand, Commander On-Demand, Chaos On-Demand, Bonus Event
   - Track participation and placement rewards with dropdown selectors
-- **Predefined Prize Wall**: All prizes from London event included:
-  - 1 Play Booster Pack (100 tickets)
-  - 12 Different cards (150-200 tickets each)
-  - 4 Game mats (200-750 tickets each)
+- **Dynamic Prize Wall**: Prizes loaded from JSON file for easy customization
+  - Default: All prizes from London event included
+  - Edit prizes through web-based GUI editor
+  - Prizes persist in localStorage with reset to defaults option
 - **Direct Cart Addition**: Add/remove prizes with +/- buttons
 - **Real-Time Budget Tracking**: See available, spent, and remaining tickets instantly
 - **Visual Feedback**: Color-coded remaining tickets display
 - **Export Functionality**: Download your purchase plan as a text file
-- **Auto-Save**: All selections persist using localStorage (entry type, events, cart)
+- **Auto-Save**: All selections persist using localStorage (entry type, events, cart, custom prizes)
 - **Mobile-Optimized**: Responsive design with touch-friendly 44px minimum tap targets
 
 ## 📱 Mobile Friendly
@@ -43,8 +43,45 @@ Fully optimized for mobile devices with:
    - Use **+** button to add prizes to your cart
    - Use **-** button to remove prizes from cart
    - Budget validation prevents overspending
-5. **Export Your Plan**: Click "Export List" to download your selections
-6. **Start Fresh**: Use "Clear Cart" to remove all items
+5. **Customize Prize Wall (Optional)**:
+   - Click "✏️ Edit Prize Wall" to open the GUI editor
+   - Add/remove cards and game mats
+   - Enable Carbonite Booster option if needed
+   - Click "Save Changes" to update the prize wall
+   - Use "Reset to Defaults" to restore original prizes
+6. **Customize Events (Optional)**:
+   - Click "✏️ Edit Events" to open the events editor
+   - Add/remove/edit scheduled and on-demand events
+   - Customize win options and base rewards
+   - Changes persist across browser sessions
+7. **Export Your Plan**: Click "Export List" to download your selections
+8. **Start Fresh**: Use "Clear Cart" to remove all items
+
+## 📝 Prize Data Format
+
+Prizes are stored in JSON format with three categories:
+
+```json
+{
+  "boosters": [
+    { "name": "Booster Pack", "points": 100 }
+  ],
+  "cards": [
+    { "name": "Vernestra Rwoh (Set 5)", "points": 200 },
+    { "name": "HK-47 (Set 5)", "points": 200 }
+  ],
+  "mats": [
+    { "name": "Babu Frik (Set 5) Game Mat", "points": 1000 }
+  ]
+}
+```
+
+- **boosters**: Array of booster pack options
+- **cards**: Array of individual cards
+- **mats**: Array of game mats
+- Each item has `name` (display name) and `points` (ticket cost)
+
+Use the built-in GUI editor to manage prizes without editing JSON directly.
 
 ## 💰 Ticket Display
 
@@ -58,20 +95,32 @@ Fully optimized for mobile devices with:
 
 ## 📁 Files
 
-- `index.html` - Main application structure with entry selection, events, and prize wall
+### Main Application
+- `index.html` - Main planner application
 - `styles.css` - Mobile-first responsive styling with gradient UI
-- `script.js` - Application logic with event delegation and state management
+- `script.js` - Application logic with event delegation, JSON loading, and state management
+
+### Data Files
+- `prizes.json` - Prize wall data structure
+- `events.json` - Events data structure
+
+### Editor Pages
+- `prizes-editor.html` / `prizes-editor.css` / `prizes-editor.js` - Prize wall GUI editor
+- `events-editor.html` / `events-editor.css` / `events-editor.js` - Events GUI editor
+
+### Documentation
 - `README.md` - This documentation
 
 ## 🛠️ Technical Details
 
 ### Architecture
 - **Pure Vanilla Stack**: HTML5, CSS3, JavaScript ES6+ (no frameworks or dependencies)
+- **JSON-Based Data**: Prizes and events loaded from JSON files with GUI editors
 - **Event Delegation**: Single event handler for all prize/cart buttons (performance optimized)
 - **DOM Caching**: Minimizes repeated DOM queries for better performance
-- **State Persistence**: localStorage for cart, entry type, and selected events
+- **State Persistence**: localStorage for cart, entry type, selected events, custom prizes, and custom events
 - **XSS Protection**: HTML escaping for user data
-- **Error Handling**: Try-catch blocks for localStorage operations
+- **Error Handling**: Try-catch blocks for localStorage and file operations
 
 ### Design Patterns
 - Centralized CONFIG object for maintainable configuration

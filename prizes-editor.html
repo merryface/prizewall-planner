@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prize Wall Editor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="prizes-editor.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✏️ Prize Wall Editor</h1>
+            <p class="header-desc">Customize your prize wall items for future events</p>
+            <div class="editor-actions">
+                <a href="index.html" class="btn btn-secondary">← Back to Planner</a>
+                <button id="resetEditorBtn" class="btn btn-danger">🔄 Reset to Defaults</button>
+                <button id="saveEditorBtn" class="btn btn-primary">💾 Save Changes</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Booster Packs Section -->
+            <section class="editor-section">
+                <h2>🎴 Booster Packs</h2>
+                <div class="booster-options">
+                    <label class="toggle-option">
+                        <input type="checkbox" id="carboniteBoosterToggle">
+                        <span class="toggle-label">
+                            <strong>Include Carbonite Boosters</strong>
+                            <small>Add Carbonite Booster as an additional booster pack option</small>
+                        </span>
+                    </label>
+                </div>
+                
+                <div class="booster-grid" id="boosterGrid">
+                    <!-- Booster items will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Cards Section -->
+            <section class="editor-section">
+                <h2>🃏 Cards</h2>
+                <div class="editor-controls">
+                    <button id="addCardBtn" class="btn btn-secondary">+ Add Card</button>
+                </div>
+                <div class="items-list" id="cardsList">
+                    <!-- Card items will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Game Mats Section -->
+            <section class="editor-section">
+                <h2>🎨 Game Mats</h2>
+                <div class="editor-controls">
+                    <button id="addMatBtn" class="btn btn-secondary">+ Add Game Mat</button>
+                </div>
+                <div class="items-list" id="matsList">
+                    <!-- Mat items will be loaded here -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="editor-actions">
+                <a href="index.html" class="btn btn-secondary">← Back to Planner</a>
+                <button id="resetEditorBtn2" class="btn btn-danger">🔄 Reset to Defaults</button>
+                <button id="saveEditorBtn2" class="btn btn-primary">💾 Save Changes</button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="prizes-editor.js"></script>
+</body>
+</html>

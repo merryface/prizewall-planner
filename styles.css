@@ -505,6 +505,9 @@ h3 {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
 }
 
 .btn-primary {
@@ -676,5 +679,55 @@ h3 {
     
     .section-desc {
         font-size: 0.9em;
+    }
+}
+
+/* CSV Upload Section */
+.csv-upload-section {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.section-actions {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.csv-upload-section h3 {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.csv-upload-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.csv-format-info {
+    font-size: 0.85em;
+    color: #666;
+    font-style: italic;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .csv-upload-section {
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+    
+    .csv-upload-controls {
+        flex-direction: column;
+    }
+    
+    .csv-upload-controls .btn {
+        width: 100%;
     }
 }

@@ -1,0 +1,277 @@
+/* Editor-specific styles */
+
+.header-desc {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 1em;
+}
+
+.editor-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+footer {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.editor-section {
+    margin-bottom: 30px;
+}
+
+.editor-controls {
+    margin-bottom: 20px;
+}
+
+/* Booster Options */
+.booster-options {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8eaf0 100%);
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+}
+
+.toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.toggle-option input[type="checkbox"] {
+    width: 50px;
+    height: 28px;
+    appearance: none;
+    background: #ddd;
+    border-radius: 14px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.toggle-option input[type="checkbox"]:checked {
+    background: #667eea;
+}
+
+.toggle-option input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-option input[type="checkbox"]:checked::before {
+    transform: translateX(22px);
+}
+
+.toggle-label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.toggle-label strong {
+    color: #333;
+    font-size: 1.1em;
+}
+
+.toggle-label small {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.booster-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+/* Items List */
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.item-card:hover {
+    border-color: #667eea;
+    transform: translateX(5px);
+}
+
+.item-info {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+.item-name-input,
+.item-points-input {
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95em;
+    transition: border-color 0.3s ease;
+}
+
+.item-name-input:focus,
+.item-points-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.item-points-input {
+    max-width: 120px;
+}
+
+.item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-delete {
+    background: #fee;
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.btn-delete:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Booster Item Card */
+.booster-item {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.booster-item label {
+    font-size: 0.9em;
+    color: #666;
+    font-weight: 500;
+}
+
+.booster-item input {
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95em;
+}
+
+.booster-item input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Success message */
+.save-success {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #27ae60;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease;
+    z-index: 1000;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .editor-actions {
+        flex-direction: column;
+    }
+    
+    .editor-actions .btn {
+        width: 100%;
+    }
+    
+    .item-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .item-card {
+        grid-template-columns: 1fr;
+    }
+    
+    .item-actions {
+        justify-content: flex-end;
+    }
+    
+    .booster-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .toggle-option {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .item-points-input {
+        max-width: 100%;
+    }
+}

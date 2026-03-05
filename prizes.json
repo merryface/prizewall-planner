@@ -1,0 +1,76 @@
+{
+  "boosters": [
+    {
+      "name": "Booster Pack",
+      "points": 100
+    }
+  ],
+  "cards": [
+    {
+      "name": "Vernestra Rwoh (Set 5)",
+      "points": 200
+    },
+    {
+      "name": "HK-47 (Set 5)",
+      "points": 200
+    },
+    {
+      "name": "Galen Erso (Set 6)",
+      "points": 200
+    },
+    {
+      "name": "General Grievous (Set 6)",
+      "points": 200
+    },
+    {
+      "name": "Grogu (Set 5)",
+      "points": 200
+    },
+    {
+      "name": "Aurra Sing (Set 5)",
+      "points": 200
+    },
+    {
+      "name": "Planetary Bombardment (Set 4)",
+      "points": 200
+    },
+    {
+      "name": "Syril Karn (Set 6)",
+      "points": 200
+    },
+    {
+      "name": "Axe Woves (Set 5)",
+      "points": 200
+    },
+    {
+      "name": "IG-2000 (Set 4)",
+      "points": 200
+    },
+    {
+      "name": "Gungi (Set 5)",
+      "points": 200
+    },
+    {
+      "name": "Chopper (Set 6)",
+      "points": 200
+    }
+  ],
+  "mats": [
+    {
+      "name": "Babu Frik (Set 5) Game Mat",
+      "points": 1000
+    },
+    {
+      "name": "Grassroots Resistence (Set 6) Game Mat",
+      "points": 1000
+    },
+    {
+      "name": "Oppression Breeds Rebellion (Set 6) Game Mat",
+      "points": 1000
+    },
+    {
+      "name": "Yoda's Lightsaber (Set 5) Game Mat",
+      "points": 1000
+    }
+  ]
+}
