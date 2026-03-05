@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prize Wall Planner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 London Sector Prize Wall Planner</h1>
+            
+            <div class="entry-selection">
+                <h3>Select Your Entry Ticket Type</h3>
+                <div class="entry-options">
+                    <label class="entry-option">
+                        <input type="radio" name="entry" value="100" id="entry-standard">
+                        <span class="entry-label">
+                            <strong>Standard</strong>
+                            <small>100 tickets</small>
+                        </span>
+                    </label>
+                    <label class="entry-option">
+                        <input type="radio" name="entry" value="1300" id="entry-premium">
+                        <span class="entry-label">
+                            <strong>Premium</strong>
+                            <small>1300 tickets</small>
+                        </span>
+                    </label>
+                    <label class="entry-option active">
+                        <input type="radio" name="entry" value="3200" id="entry-deluxe" checked>
+                        <span class="entry-label">
+                            <strong>Deluxe</strong>
+                            <small>3200 tickets</small>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="points-display">
+                <div class="points-card">
+                    <span class="label">Event Tickets</span>
+                    <span class="value" id="eventTickets">0</span>
+                </div>
+                <div class="points-card">
+                    <span class="label">Total Available</span>
+                    <span class="value" id="startingPoints">3200</span>
+                </div>
+                <div class="points-card">
+                    <span class="label">Spent</span>
+                    <span class="value spent" id="spentPoints">0</span>
+                </div>
+                <div class="points-card remaining">
+                    <span class="label">Remaining</span>
+                    <span class="value" id="remainingPoints">3200</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="events-section">
+                <h2>Add Prize Tickets from Events</h2>
+                <p class="section-desc">Select the events you're participating in and your expected performance to calculate your prize tickets.</p>
+                
+                <div class="events-container">
+                    <div class="event-category">
+                        <h3>Scheduled Side Events</h3>
+                        
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-deluxe" class="event-checkbox">
+                                <label for="evt-deluxe">Deluxe Sector Cup</label>
+                                <span class="base-tickets">Base: 2000 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-deluxe-placement" style="display: none;">
+                                <label>Wins:</label>
+                                <select class="wins-select" data-event="deluxe">
+                                    <option value="0">0 Wins</option>
+                                    <option value="400">1 Win (+400)</option>
+                                    <option value="800">2 Wins (+800)</option>
+                                    <option value="1000">3 Wins (+1000)</option>
+                                    <option value="2000">4 Wins (+2000)</option>
+                                    <option value="4000">5 Wins (+4000)</option>
+                                    <option value="8000">6 Wins (+8000)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-standard" class="event-checkbox">
+                                <label for="evt-standard">Standard Sector Cup</label>
+                                <span class="base-tickets">Base: 1000 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-standard-placement" style="display: none;">
+                                <label>Wins:</label>
+                                <select class="wins-select" data-event="standard">
+                                    <option value="0">0 Wins</option>
+                                    <option value="400">1 Win (+400)</option>
+                                    <option value="600">2 Wins (+600)</option>
+                                    <option value="800">3 Wins (+800)</option>
+                                    <option value="1600">4 Wins (+1600)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-eternal" class="event-checkbox">
+                                <label for="evt-eternal">Eternal Sector Cup</label>
+                                <span class="base-tickets">Base: 1000 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-eternal-placement" style="display: none;">
+                                <label>Wins:</label>
+                                <select class="wins-select" data-event="eternal">
+                                    <option value="0">0 Wins</option>
+                                    <option value="400">1 Win (+400)</option>
+                                    <option value="600">2 Wins (+600)</option>
+                                    <option value="800">3 Wins (+800)</option>
+                                    <option value="1600">4 Wins (+1600)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-ultimate" class="event-checkbox">
+                                <label for="evt-ultimate">Ultimate Sealed Event</label>
+                                <span class="base-tickets">No base reward</span>
+                            </div>
+                            <div class="event-placement" id="evt-ultimate-placement" style="display: none;">
+                                <label>Wins:</label>
+                                <select class="wins-select" data-event="ultimate">
+                                    <option value="0">0 Wins</option>
+                                    <option value="200">1 Win (+200)</option>
+                                    <option value="400">2 Wins (+400)</option>
+                                    <option value="800">3 Wins (+800)</option>
+                                    <option value="1200">4 Wins (+1200)</option>
+                                    <option value="2000">5 Wins (+2000)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-3v3" class="event-checkbox">
+                                <label for="evt-3v3">3v3 Team Sealed Event</label>
+                                <span class="base-tickets">Base: 400 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-3v3-placement" style="display: none;">
+                                <label>Wins:</label>
+                                <select class="wins-select" data-event="3v3">
+                                    <option value="0">0 Wins</option>
+                                    <option value="200">1 Win (+200)</option>
+                                    <option value="400">2 Wins (+400)</option>
+                                    <option value="800">3 Wins (+800)</option>
+                                    <option value="1200">4 Wins (+1200)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-trilogy" class="event-checkbox">
+                                <label for="evt-trilogy">Ultimate Trilogy Battle</label>
+                                <span class="base-tickets">Base: 400 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-trilogy-placement" style="display: none;">
+                                <label>Wins:</label>
+                                <select class="wins-select" data-event="trilogy">
+                                    <option value="0">0-1 Wins</option>
+                                    <option value="600">2 Wins (+600)</option>
+                                    <option value="800">3 Wins (+800)</option>
+                                    <option value="1200">4 Wins (+1200)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="event-category">
+                        <h3>On-Demand Side Events</h3>
+                        
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-constructed" class="event-checkbox">
+                                <label for="evt-constructed">Constructed Pod</label>
+                                <span class="base-tickets">Base: 200 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-constructed-placement" style="display: none;">
+                                <label>Record:</label>
+                                <select class="wins-select" data-event="constructed">
+                                    <option value="0">0-3 or 1-2</option>
+                                    <option value="200">2-1 (+200)</option>
+                                    <option value="400">3-0 (+400)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-draft" class="event-checkbox">
+                                <label for="evt-draft">Draft Pod</label>
+                                <span class="base-tickets">Base: 200 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-draft-placement" style="display: none;">
+                                <label>Record:</label>
+                                <select class="wins-select" data-event="draft">
+                                    <option value="0">0-3 or 1-2</option>
+                                    <option value="400">2-1 (+400)</option>
+                                    <option value="800">3-0 (+800)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-trilogypod" class="event-checkbox">
+                                <label for="evt-trilogypod">Trilogy Pod</label>
+                                <span class="base-tickets">Base: 200 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-trilogypod-placement" style="display: none;">
+                                <label>Record:</label>
+                                <select class="wins-select" data-event="trilogypod">
+                                    <option value="0">0-3</option>
+                                    <option value="400">1-2 (+400)</option>
+                                    <option value="600">2-1 (+600)</option>
+                                    <option value="1000">3-0 (+1000)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-premium" class="event-checkbox">
+                                <label for="evt-premium">Premium Draft Pod</label>
+                                <span class="base-tickets">Base: 200 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-premium-placement" style="display: none;">
+                                <label>Record:</label>
+                                <select class="wins-select" data-event="premium">
+                                    <option value="0">0-3 or 1-2</option>
+                                    <option value="600">2-1 (+600)</option>
+                                    <option value="1000">3-0 (+1000)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="event-item">
+                            <div class="event-header">
+                                <input type="checkbox" id="evt-twinsuns" class="event-checkbox">
+                                <label for="evt-twinsuns">Twin Suns Pod</label>
+                                <span class="base-tickets">Base: 200 tickets</span>
+                            </div>
+                            <div class="event-placement" id="evt-twinsuns-placement" style="display: none;">
+                                <label>Result:</label>
+                                <select class="wins-select" data-event="twinsuns">
+                                    <option value="0">Did not win</option>
+                                    <option value="300">Winner (+300)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="predefined-prizes-section">
+                <h2>Prize Wall Items</h2>
+                <div class="prize-categories">
+                    <div class="prize-category">
+                        <h3>Booster Pack (100 pts)</h3>
+                        <div class="prize-grid">
+                            <div class="prize-item">
+                                <span class="prize-name">Booster Pack</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Booster Pack" data-points="100">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Booster Pack" data-points="100">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prize-category">
+                        <h3>Card, Alternate-Art Frame (200 pts)</h3>
+                        <div class="prize-grid">
+                            <div class="prize-item">
+                                <span class="prize-name">Vernestra Rwoh</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Vernestra Rwoh (Set 5)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Vernestra Rwoh (Set 5)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">HK-47</span>
+                                <button class="prize-btn prize-btn-minus" data-name="HK-47 (Set 5)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="HK-47 (Set 5)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Galen Erso</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Galen Erso (Set 6)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Galen Erso (Set 6)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">General Grievous</span>
+                                <button class="prize-btn prize-btn-minus" data-name="General Grievous (Set 6)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="General Grievous (Set 6)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Grogu</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Grogu (Set 5)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Grogu (Set 5)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Aurra Sing</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Aurra Sing (Set 5)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Aurra Sing (Set 5)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Planetary Bombardment</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Planetary Bombardment (Set 4)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Planetary Bombardment (Set 4)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Syril Karn</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Syril Karn (Set 6)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Syril Karn (Set 6)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Axe Woves</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Axe Woves (Set 5)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Axe Woves (Set 5)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">IG-2000</span>
+                                <button class="prize-btn prize-btn-minus" data-name="IG-2000 (Set 4)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="IG-2000 (Set 4)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Gungi</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Gungi (Set 5)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Gungi (Set 5)" data-points="200">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Chopper</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Chopper (Set 6)" data-points="200">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Chopper (Set 6)" data-points="200">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prize-category">
+                        <h3>Game Mat (1000 pts)</h3>
+                        <div class="prize-grid">
+                            <div class="prize-item">
+                                <span class="prize-name">Babu Frik</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Babu Frik (Set 5) Game Mat" data-points="1000">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Babu Frik (Set 5) Game Mat" data-points="1000">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Grassroots Resistence</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Grassroots Resistence (Set 6) Game Mat" data-points="1000">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Grassroots Resistence (Set 6) Game Mat" data-points="1000">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Oppression Breeds Rebellion</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Oppression Breeds Rebellion (Set 6) Game Mat" data-points="1000">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Oppression Breeds Rebellion (Set 6) Game Mat" data-points="1000">+</button>
+                            </div>
+                            <div class="prize-item">
+                                <span class="prize-name">Yoda's Lightsaber</span>
+                                <button class="prize-btn prize-btn-minus" data-name="Yoda's Lightsaber (Set 5) Game Mat" data-points="1000">−</button>
+                                <button class="prize-btn prize-btn-plus" data-name="Yoda's Lightsaber (Set 5) Game Mat" data-points="1000">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cart-section">
+                <h2>Shopping Cart</h2>
+                <div id="cartEmpty" class="empty-state">
+                    <p>Your cart is empty. Add prizes to start planning!</p>
+                </div>
+                <div id="cartItems" class="cart-items"></div>
+                <div class="cart-actions">
+                    <button id="clearCart" class="btn btn-secondary">Clear Cart</button>
+                    <button id="exportCart" class="btn btn-primary">Export List</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
