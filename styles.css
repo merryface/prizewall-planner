@@ -379,8 +379,9 @@ h3 {
 
 .prize-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 10px;
+    column-gap: 30px;
 }
 
 @media (max-width: 768px) {
